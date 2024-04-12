@@ -9,8 +9,7 @@ fn _solve(board: &mut Board, i: usize, missing: usize) -> Option<Board> {
     if missing == 0 {
         return Some(board.clone());
     }
-    let cell = board.get_i(i);
-    if cell != 0 {
+    if board.get_i(i) != 0 {
         return _solve(board, i + 1, missing);
     }
     for v in 1..=9 {
