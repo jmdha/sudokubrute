@@ -20,10 +20,15 @@ impl Board {
 
     fn is_valid_box(&self, x: usize, y: usize, val: u8) -> bool {
         assert!(val != 0);
-        let x_offset = x - x % 3;
-        let y_offset = y - y % 3;
-        (0..3)
-            .cartesian_product(0..3)
-            .all(|(x, y)| self.get(x + x_offset, y + y_offset) != val)
+        let _x = x - x % 3;
+        let _y = y - y % 3;
+        for x in _x.._x + 3 {
+            for y in _y.._y + 3 {
+                if self.get(x, y) == val {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
