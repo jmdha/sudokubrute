@@ -3,10 +3,6 @@ name = "sudokubrute"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-itertools = "0.12.1"
-rand = "0.8.5"
-
 [dev-dependencies]
 rstest = "0.19"
 criterion = "0.5.1"
