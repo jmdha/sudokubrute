@@ -11,7 +11,10 @@ impl Board {
             if cell == 0 {
                 continue;
             }
-            board = board.set_i(i, cell)?;
+            let success = board.set_i(i, cell);
+            if !success {
+                return None;
+            }
         }
         Some(board)
     }

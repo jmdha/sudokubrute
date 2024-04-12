@@ -18,20 +18,29 @@ impl Board {
         self.get(x, y)
     }
 
-    pub fn set(&self, x: usize, y: usize, val: u8) -> Option<Board> {
+    pub fn set(&mut self, x: usize, y: usize, val: u8) -> bool {
         assert!(val != 0);
         if !self.is_valid(x, y, val) {
-            return None;
+            return false;
         }
-        let mut board = self.clone();
-        board.cells[x][y] = val;
-        Some(board)
+        self.cells[x][y] = val;
+        true
     }
 
-    pub fn set_i(&self, i: usize, val: u8) -> Option<Board> {
+    pub fn set_i(&mut self, i: usize, val: u8) -> bool {
         let x = i % 9;
         let y = (i - x) / 9;
         self.set(x, y, val)
+    }
+
+    pub fn clear(&mut self, x: usize, y: usize) {
+        self.cells[x][y] = 0;
+    }
+
+    pub fn clear_i(&mut self, i: usize) {
+        let x = i % 9;
+        let y = (i - x) / 9;
+        self.clear(x, y)
     }
 
     pub fn count(&self) -> usize {

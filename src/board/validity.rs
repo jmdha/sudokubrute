@@ -1,5 +1,3 @@
-use itertools::Itertools;
-
 use super::Board;
 
 impl Board {
