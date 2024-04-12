@@ -18,14 +18,14 @@ fn finds_solution(
         "256734098891265374347198652514680729728519436063427581135942867689371245402856913"
     )]
     board: &str,
-    #[values(SolveKind::Backtracking, SolveKind::Bogo)] solve_kind: SolveKind,
+    #[values(SolveKind::Backtracking)] solve_kind: SolveKind,
 ) {
-    let board = Board::from(board);
-    assert!(board.is_valid());
+    let board = Board::generate(board);
+    assert!(board.is_some());
+    let board = board.unwrap();
     assert!(!board.is_filled());
     let board = solve(solve_kind, board);
     assert!(board.is_some());
     let board = board.unwrap();
-    assert!(board.is_valid());
     assert!(board.is_filled());
 }

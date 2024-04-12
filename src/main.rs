@@ -1,10 +1,13 @@
 use sudokubrute::{board::Board, solve::solve};
 
 fn main() {
-    let board = Board::from(
-        "004300209005009001070060043006002087190007400050083000600000105003508690042910300",
-    );
-    loop {
-        solve(sudokubrute::solve::SolveKind::Backtracking, board.clone());
+    let board = Board::generate(
+        "9..8...........5............2..1...3.1.....6....4...7.7.86.........3.1..4.....2..",
+    )
+    .unwrap();
+    let solved = solve(sudokubrute::solve::SolveKind::Backtracking, board.clone());
+    if solved.is_none() {
+        println!("unsolvable");
     }
+    print!("{}", solved.unwrap());
 }

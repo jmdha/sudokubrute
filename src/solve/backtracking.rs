@@ -1,25 +1,22 @@
 use crate::board::Board;
 
 pub fn solve(board: Board) -> Option<Board> {
-    _solve(board, 0)
+    _solve(board.clone(), 0, 81 - board.count())
 }
 
-fn _solve(board: Board, i: usize) -> Option<Board> {
-    if board.is_filled() {
+fn _solve(board: Board, i: usize, missing: usize) -> Option<Board> {
+    if missing == 0 {
         return Some(board);
     }
     let cell = board.get_i(i);
-    if cell.is_some() {
-        return _solve(board, i + 1);
+    if cell != 0 {
+        return _solve(board, i + 1, missing);
     }
     for v in 1..=9 {
-        let mut board = board.clone();
-        board.set_i(i, Some(v));
-        if !board.is_valid() {
-            continue;
-        }
-        if let Some(board) = _solve(board, i + 1) {
-            return Some(board);
+        if let Some(board) = board.set_i(i, v) {
+            if let Some(board) = _solve(board, i + 1, missing - 1) {
+                return Some(board);
+            }
         }
     }
     None
