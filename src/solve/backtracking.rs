@@ -14,14 +14,15 @@ fn _solve(board: &mut Board, i: usize, missing: usize) -> Option<Board> {
     if board.get_i(i) != 0 {
         return _solve(board, i + 1, missing);
     }
-    for v in 1..=9 {
-        let success = board.set_i(i, v);
-        if success {
-            if let Some(board) = _solve(board, i + 1, missing - 1) {
-                return Some(board);
-            }
-            board.clear_i(i);
+    let mut candidates = board.candidates_i(i);
+    while candidates != 0 {
+        let v = candidates.trailing_zeros();
+        candidates &= !(1 << v);
+        board.set_unchecked_i(i, v as u8);
+        if let Some(board) = _solve(board, i + 1, missing - 1) {
+            return Some(board);
         }
+        board.clear_i(i);
     }
     None
 }
