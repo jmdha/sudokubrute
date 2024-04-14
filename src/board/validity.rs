@@ -6,7 +6,7 @@ impl Board {
         self.is_valid_rank(y, val) && self.is_valid_file(x, val) && self.is_valid_box(x, y, val)
     }
 
-    pub fn is_valid_rank(&self, y: usize, val: u8) -> bool {
+    fn is_valid_rank(&self, y: usize, val: u8) -> bool {
         assert!(val != 0);
         (0..9).all(|x| self.get(x, y) != val)
     }
