@@ -4,9 +4,9 @@ pub mod debug;
 #[derive(Clone)]
 pub struct Board {
     cells: [[u8; 9]; 9],
-    valid_ranks: [u16; 9],
-    valid_files: [u16; 9],
-    valid_boxes: [[u16; 3]; 3],
+    valid_ranks: [usize; 9],
+    valid_files: [usize; 9],
+    valid_boxes: [[usize; 3]; 3],
 }
 
 impl Default for Board {
@@ -104,18 +104,18 @@ impl Board {
         self.count() == 81
     }
 
-    pub fn candidates(&self, x: usize, y: usize) -> u16 {
+    pub fn candidates(&self, x: usize, y: usize) -> usize {
         self.valid_ranks[y] & self.valid_files[x] & self.get_box(x, y)
     }
 
-    pub fn candidates_i(&self, i: usize) -> u16 {
+    pub fn candidates_i(&self, i: usize) -> usize {
         debug_assert!(i < 81);
         let x = i % 9;
         let y = (i - x) / 9;
         self.candidates(x, y)
     }
 
-    fn get_box(&self, x: usize, y: usize) -> &u16 {
+    fn get_box(&self, x: usize, y: usize) -> &usize {
         debug_assert!(x < 9);
         debug_assert!(y < 9);
         let x = x / 3;
@@ -123,7 +123,7 @@ impl Board {
         &self.valid_boxes[x][y]
     }
 
-    fn get_box_mut(&mut self, x: usize, y: usize) -> &mut u16 {
+    fn get_box_mut(&mut self, x: usize, y: usize) -> &mut usize {
         debug_assert!(x < 9);
         debug_assert!(y < 9);
         let x = x / 3;
