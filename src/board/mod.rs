@@ -7,6 +7,7 @@ pub struct Board {
     valid_ranks: [usize; 9],
     valid_files: [usize; 9],
     valid_boxes: [[usize; 3]; 3],
+    times_set: usize,
 }
 
 impl Default for Board {
@@ -37,11 +38,16 @@ impl Default for Board {
             valid_ranks,
             valid_files,
             valid_boxes,
+            times_set: 0,
         }
     }
 }
 
 impl Board {
+    pub fn times_set(&self) -> usize {
+        self.times_set
+    }
+
     pub fn get(&self, x: usize, y: usize) -> u8 {
         debug_assert!(x < 9);
         debug_assert!(y < 9);
@@ -66,6 +72,7 @@ impl Board {
         self.valid_ranks[y] &= !(1 << val);
         self.valid_files[x] &= !(1 << val);
         *self.get_box_mut(x, y) &= !(1 << val);
+        self.times_set += 1;
     }
 
     pub fn set_unchecked_i(&mut self, i: usize, val: u8) {
