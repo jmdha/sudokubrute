@@ -6,9 +6,11 @@ pub fn solve(mut board: Board) -> Option<Board> {
 }
 
 fn _solve(board: &mut Board, i: usize, missing: usize) -> Option<Board> {
+    debug_assert!(missing <= 81);
     if missing == 0 {
         return Some(board.clone());
     }
+    debug_assert!(i < 81);
     if board.get_i(i) != 0 {
         return _solve(board, i + 1, missing);
     }
