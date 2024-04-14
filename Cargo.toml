@@ -6,6 +6,7 @@ edition = "2021"
 [dev-dependencies]
 rstest = "0.19"
 criterion = "0.5.1"
+itertools = "0.12"
 
 [[bench]]
 name = "bench_main"

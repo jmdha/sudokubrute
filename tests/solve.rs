@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use rstest::rstest;
 use sudokubrute::{
     board::Board,
@@ -120,4 +121,55 @@ fn finds_solution(
     assert!(board.is_some());
     let board = board.unwrap();
     assert!(board.is_filled());
+    assert!(is_valid(&board));
+}
+
+fn is_valid(board: &Board) -> bool {
+    is_valid_files(board) && is_valid_ranks(board) && is_valid_boxes(board)
+}
+
+fn is_valid_files(board: &Board) -> bool {
+    (0..9).all(|i| is_valid_file(board, i))
+}
+
+fn is_valid_file(board: &Board, x: usize) -> bool {
+    assert!(x < 9);
+    (0..9)
+        .map(|y| board.get(x, y))
+        .filter(|c| *c != 0)
+        .duplicates()
+        .count()
+        == 0
+}
+
+fn is_valid_ranks(board: &Board) -> bool {
+    (0..9).all(|i| is_valid_rank(board, i))
+}
+
+fn is_valid_rank(board: &Board, y: usize) -> bool {
+    assert!(y < 9);
+    (0..9)
+        .map(|x| board.get(x, y))
+        .filter(|c| *c != 0)
+        .duplicates()
+        .count()
+        == 0
+}
+
+fn is_valid_boxes(board: &Board) -> bool {
+    (0..3)
+        .cartesian_product(0..3)
+        .all(|(x, y)| is_valid_box(board, x, y))
+}
+
+fn is_valid_box(board: &Board, x: usize, y: usize) -> bool {
+    assert!(x < 3);
+    assert!(y < 3);
+    (0..3)
+        .cartesian_product(0..3)
+        .map(|(x_o, y_o)| board.get(3 * x + x_o, 3 * y + y_o))
+        .filter(|c| *c != 0)
+        .duplicates()
+        .count()
+        == 0
 }
