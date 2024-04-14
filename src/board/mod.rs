@@ -1,6 +1,5 @@
 pub mod construction;
 pub mod debug;
-pub mod validity;
 
 #[derive(Clone)]
 pub struct Board {
@@ -56,30 +55,10 @@ impl Board {
         self.get(x, y)
     }
 
-    pub fn set(&mut self, x: usize, y: usize, val: u8) -> bool {
-        debug_assert!(x < 9);
-        debug_assert!(y < 9);
-        debug_assert_ne!(val, 0);
-        if !self.is_valid(x, y, val) {
-            return false;
-        }
-        self.set_unchecked(x, y, val);
-        true
-    }
-
-    pub fn set_i(&mut self, i: usize, val: u8) -> bool {
-        debug_assert!(i < 81);
-        debug_assert_ne!(val, 0);
-        let x = i % 9;
-        let y = (i - x) / 9;
-        self.set(x, y, val)
-    }
-
     pub fn set_unchecked(&mut self, x: usize, y: usize, val: u8) {
         debug_assert!(x < 9);
         debug_assert!(y < 9);
         debug_assert_ne!(val, 0);
-        debug_assert!(self.is_valid(x, y, val));
         self.cells[x][y] = val;
         debug_assert!(self.valid_ranks[y] & (1 << val) != 0);
         debug_assert!(self.valid_files[x] & (1 << val) != 0);

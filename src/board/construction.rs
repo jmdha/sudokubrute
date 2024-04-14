@@ -11,10 +11,10 @@ impl Board {
             if cell == 0 {
                 continue;
             }
-            let success = board.set_i(i, cell);
-            if !success {
+            if board.candidates_i(i) & 1 << cell == 0 {
                 return None;
             }
+            board.set_unchecked_i(i, cell);
         }
         Some(board)
     }
