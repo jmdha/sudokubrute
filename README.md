@@ -37,4 +37,4 @@ The benchmarks can be seen [here](https://github.com/jamadaha/sudokubrute/tree/m
 
 ![image](https://github.com/jamadaha/sudokubrute/assets/53914190/f8040cb4-42cd-4b3a-a019-7676856aafe6)
 
-Does around 159 million state modifications each second.
+Solves most Sudokus in a few micro seonds and does around 159 million state modifications each second.
